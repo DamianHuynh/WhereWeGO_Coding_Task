@@ -7,6 +7,7 @@ interface AppViewProps extends ViewProps {
   rowGap?: ViewStyle['rowGap'];
   columnGap?: ViewStyle['columnGap'];
   justifyContent?: ViewStyle['justifyContent'];
+  flexDirection?: ViewStyle['flexDirection'];
 }
 
 const AppView = (props: AppViewProps) => {
@@ -17,10 +18,11 @@ const AppView = (props: AppViewProps) => {
     rowGap,
     columnGap,
     justifyContent,
+    flexDirection,
     ...otherProps
   } = props;
   const _style = StyleSheet.flatten([
-    {gap, alignItems, rowGap, columnGap, justifyContent},
+    {gap, alignItems, rowGap, columnGap, justifyContent, flexDirection},
     style,
   ]);
 
