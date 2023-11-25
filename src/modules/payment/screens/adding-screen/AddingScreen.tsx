@@ -1,21 +1,13 @@
+import BackgroundView from '@components/BackgroundView';
+import ScreenHeader from '@components/ScreenHeader';
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
-import {OMISE_PUB, OMISE_SEC} from '@env';
 
 const AddingScreen = () => {
   return (
-    <View style={styles.container}>
-      <Text>OMISE_PUB: {OMISE_PUB}</Text>
-      <Text>OMISE_SEC: {OMISE_SEC}</Text>
-    </View>
+    <BackgroundView>
+      <ScreenHeader />
+    </BackgroundView>
   );
 };
 
 export default AddingScreen;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-  },
-});

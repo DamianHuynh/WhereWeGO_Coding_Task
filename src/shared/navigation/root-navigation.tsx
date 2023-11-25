@@ -1,13 +1,16 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {NavigationContainer} from '@react-navigation/native';
+import {
+  NavigationContainer,
+  NavigatorScreenParams,
+} from '@react-navigation/native';
 
-import PaymentNavigator from './payment-navigator';
+import PaymentNavigator, {PaymentNavigatorParamList} from './payment-navigator';
 
 export const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export type RootStackParamList = {
-  Payment: undefined;
+  Payment: NavigatorScreenParams<PaymentNavigatorParamList>;
 };
 
 const RootNavigator = () => {
