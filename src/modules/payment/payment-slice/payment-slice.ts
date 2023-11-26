@@ -1,17 +1,27 @@
-import {createSlice} from '@reduxjs/toolkit';
+import {createSlice, PayloadAction} from '@reduxjs/toolkit';
+import {OmiseCard} from '../provider/omise';
 
+export interface OmiseCardState extends OmiseCard {
+  omise_token: string;
+}
 interface PaymentState {
-  value: number;
+  listCard: OmiseCardState[];
 }
 
 const initialState: PaymentState = {
-  value: 0,
+  listCard: [],
 };
 
 export const paymentSlice = createSlice({
   name: 'payment',
   initialState,
-  reducers: {},
+  reducers: {
+    updateListCard: (state, action: PayloadAction<OmiseCardState>) => {
+      state.listCard.push(action.payload);
+    },
+  },
 });
+
+export const {updateListCard} = paymentSlice.actions;
 
 export default paymentSlice.reducer;

@@ -1,6 +1,12 @@
 import {useNavigation} from '@react-navigation/native';
 import React, {useCallback, useMemo} from 'react';
-import {FlatList, Image, StyleSheet, TouchableOpacity} from 'react-native';
+import {
+  FlatList,
+  FlatListProps,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+} from 'react-native';
 
 import images from '@assets/png';
 import {AddIcon} from '@assets/svg';
@@ -8,9 +14,13 @@ import BackgroundView from '@components/BackgroundView';
 import ScreenHeader from '@components/ScreenHeader';
 import {AppButton, AppText, AppView} from '@components/index';
 import {scale} from '@shared/utils';
+import {useAppSelector} from '@shared/store';
+import {CardViewArea, getListCard} from '@modules/payment/payment-slice';
+import Card from '@modules/payment/components/Card';
 
 const ListingScreen = () => {
   const navigation = useNavigation();
+  const listCard = useAppSelector(getListCard);
 
   const navigateToAddingScreen = () => navigation.navigate('Adding');
 
@@ -51,13 +61,26 @@ const ListingScreen = () => {
     [],
   );
 
+  const renderItem: FlatListProps<CardViewArea>['renderItem'] = ({item}) => {
+    return <Card {...item} />;
+  };
+
+  const renderSeparator: FlatListProps<CardViewArea>['ItemSeparatorComponent'] =
+    () => <AppView style={{height: scale(14)}} />;
+
+  const flatLisStyle = !listCard.length
+    ? styles.emptyListContent
+    : styles.listContent;
+
   return (
     <BackgroundView>
       <ScreenHeader title="Cards" RightSideComponent={RightSideHeader} />
       <FlatList
-        data={[]}
-        contentContainerStyle={styles.emptyListContent}
+        data={listCard}
+        renderItem={renderItem}
+        contentContainerStyle={flatLisStyle}
         ListEmptyComponent={EmptyComponent}
+        ItemSeparatorComponent={renderSeparator}
       />
     </BackgroundView>
   );
@@ -73,6 +96,10 @@ const styles = StyleSheet.create({
     fontSize: scale(18),
     fontWeight: '400',
     textAlign: 'center',
+  },
+  listContent: {
+    paddingTop: scale(14),
+    paddingHorizontal: scale(20),
   },
   emptyListContent: {
     flex: 0.9 / 1,
